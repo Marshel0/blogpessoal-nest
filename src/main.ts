@@ -11,6 +11,6 @@ async function bootstrap() {
 
   app.enableCors(); //Habilita para aceitar requisições de servidores de outras origens e não só onde está hospedado 
 
-  await app.listen(4000);
+  await app.listen(4001);
 }
 bootstrap();
