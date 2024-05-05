@@ -15,7 +15,8 @@ export class PostagemService{
     async findAll(): Promise<Postagem[]>{
         return await this.postagemRepository.find({
             relations: {
-                tema: true
+                tema: true,
+                usuario: true
             }
         });
     }
@@ -27,16 +28,17 @@ export class PostagemService{
                 id
             },
             relations: {
-                tema: true
+                tema: true,
+                usuario: true
             }
         });
 
-        if (!postagem) // checa se a postagem não for localizada
+        if (!postagem)
             throw new HttpException(
-                'Postagem não localizada!', 
+                'A Postagem não foi localizada!', 
                 HttpStatus.NOT_FOUND);
         
-        return postagem; // retorna a postagem caso exista
+        return postagem; 
     }
 
     async findByTitulo(titulo: string): Promise<Postagem[]>{
@@ -45,14 +47,11 @@ export class PostagemService{
                 titulo: ILike(`%${titulo}%`)
             },
             relations: {
-                tema: true
+                tema: true,
+                usuario: true
             }  
         })
-        // if (postagem.length == 0) {
-        //     throw new HttpException(
-        //       `Postagem com o 'titulo ${titulo}' não encontrada!`,
-        //       HttpStatus.NOT_FOUND,
-        //     )};
+
     }
 
     async create(postagem: Postagem): Promise<Postagem>{
@@ -63,7 +62,7 @@ export class PostagemService{
 
             if(!tema)
                 throw new HttpException(
-            'O tema não foi localizado!', 
+            'O Tema não foi localizado!', 
             HttpStatus.NOT_FOUND)
 
             return await  this.postagemRepository.save(postagem);
@@ -77,7 +76,7 @@ export class PostagemService{
         let buscaPostagem: Postagem = await this.findById(postagem.id);
         
         if (!buscaPostagem || !postagem.id)
-            throw new HttpException('Postagem não foi localizada!', HttpStatus.NOT_FOUND)
+            throw new HttpException('A Postagem não foi localizada!', HttpStatus.NOT_FOUND)
         
         if (postagem.tema){
 
@@ -85,7 +84,7 @@ export class PostagemService{
 
             if(!tema)
                 throw new HttpException(
-            'O tema não foi localizado!', 
+            'O Tema não foi localizado!', 
             HttpStatus.NOT_FOUND)
 
             return await  this.postagemRepository.save(postagem);
@@ -100,7 +99,7 @@ export class PostagemService{
         
         if (!buscaPostagem)
             throw new HttpException(
-        'Postagem não foi localizada!', 
+        'A Postagem não foi localizada!', 
         HttpStatus.NOT_FOUND)
 
         return await this.postagemRepository.delete(id);
