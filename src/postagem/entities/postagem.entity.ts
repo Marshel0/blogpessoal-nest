@@ -1,8 +1,8 @@
 import { Transform, TransformFnParams } from "class-transformer";
 import { IsNotEmpty } from "class-validator";
-import { Tema } from "src/tema/entities/tema.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Usuario } from "../../usuario/entities/usuario.entity";
+import { Tema } from "../../tema/entities/tema.entity";
 
 @Entity({name: "tb_postagem"})
 export class Postagem{
